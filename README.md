@@ -16,7 +16,9 @@ $ apt-get install cmake libgoogle-glog-dev python3-pip
 $ pip3 install pyparsing z3-solver xlrd matplotlib 
 ```
 
-### Installation (Test on Ubuntu 16.04)
+### Installation
+
+####Build from source (Test on Ubuntu 16.04) 
 
 1. Clone IntSy and all its submodules (or just unzip `IntSy.zip` shared on Dropbox)
 
@@ -29,6 +31,16 @@ $ git clone --recursive https://gitee.com/jiry_2/IntSy.git
 ```bash
 $ ./install
 ```
+
+#### Docker
+
+We also release a docker container in which this project is already built at `~/IntSy`.
+
+```
+docker pull takanashirikka/intsy
+```
+
+However, since docker will affect the execution speed, we still recommend building the project from source.
 
 #### Some Tests
 
@@ -166,4 +178,4 @@ $ ./run_exp -exp 4
 
 For Figure 5 (Line 1167-1179), the script will redraw it as `run/figure/exp4.png` while the original figure used in our paper can be found as `run/expected/exp4.png`.
 
-**Note: ** There may be some small differences between the results listed in our paper and the reproduced ones since all the synthesizers in our paper are random. The results of the string track are more stable than those of the repair track since the former one contains much more benchmarks.
+**Note:** There may be some small differences between the results listed in our paper and the reproduced ones since all the synthesizers in our paper are random. The results of the string track are more stable than those of the repair track since the former one contains much more benchmarks.
