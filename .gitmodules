@@ -1,0 +1,6 @@
+[submodule "z3"]
+	path = z3
+	url = https://gitee.com/jiry_2/z3.git
+[submodule "recommend/euphony"]
+	path = recommend/euphony
+	url = https://gitee.com/jiry_2/euphony.git

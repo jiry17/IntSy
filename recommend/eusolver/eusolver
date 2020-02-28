@@ -1,0 +1,7 @@
+
+#!/bin/bash
+
+PYTHONPATH=/home/jiry/work/z3/build/python:/home/jiry/2019A/InteractiveSynthesisByFlashFill/recommend/eusolver/thirdparty/libeusolver/build:$PYTHONPATH python3 src/benchmarks.py $@
+
+# EOF
+

@@ -1,0 +1,28 @@
+Clean up all the messy LIA code from just before SyGuS competition deadline
+
+Point distinct enumerator for multiple function multiple invocations?
+
+Grammar pruning - done for commutativity, probably not associativity till after competition
+
+CAV 15 strategy
+	Grammar unroller
+	Use Mukund's cool A* search strategy
+
+LIA optimizations
+	pairwise unification
+	Linear classifier unification
+	Geometric unification? Some evidence that it is slow
+
+All grammar features
+	Variable, InputVariable, LocalVariable
+
+Separate multiple function synthesis if constraints are disjoint
+
+Change single point invocation meaning
+
+Should be easy:
+	Default grammars
+		BV - Not many benchmarks of this sort
+		SLIA - Is it even allowed?
+
+Add constant +, - : Only one benchmark where its important

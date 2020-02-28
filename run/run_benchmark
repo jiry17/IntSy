@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+
+import argparse
+import subprocess
+import os
+import xlrd
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-b', '--benchmark', type = str, required = True)
+    parser.add_argument('-d', '--depth', type = int, default = -1)
+    parser.add_argument('-l', '--logfile', type = str, default = "NONE")
+    parser.add_argument('-s', '--solver', type = str, default = "SampleSy", choices = ["SampleSy", "EpsSy", "RandomSy"])
+    parser.add_argument('-t', '--type', choices = ['string', 'repair'], required=True)
+    return parser.parse_args()
+
+if __name__ == "__main__":
+	if not os.path.exists("temp"):
+		os.mkdir("temp")
+
+	args = parse_args()
+
+	depth = args.depth
+	if depth < 0:
+		data = xlrd.open_workbook("benchmark.xls")
+		table = data.sheet_by_name(args.type)
+		nrows = table.nrows
+		for i in range(nrows):
+			name, _depth = table.row_values(i)
+			if name == args.benchmark:
+				depth = int(_depth)
+	if depth < 0:
+		print("No default depth for", args.benchmark)
+
+	solver = args.solver
+	if solver == "EpsSy": 
+		solver = "EpsSy5" # set the thredshold to the default value 5
+	command = ["./../build/main", args.type, args.benchmark, args.solver, args.logfile, "output", str(depth)]
+
+	p = subprocess.Popen(" ".join(command),shell=True,stdout=subprocess.PIPE)
+
+	for i in iter(p.stdout.readline,'b'):
+		if not i:
+			break
+		print(i.decode('gbk'), end='')

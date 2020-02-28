@@ -1,0 +1,34 @@
+mkdir build
+
+#build z3
+pushd z3
+python scripts/mk_make.py
+z3path=`pwd`
+sz3path=${z3path//\//\\\/}
+pushd build
+make -j 8 
+popd
+popd
+
+#build euphony
+pushd recommend/euphony
+./build
+popd
+
+#build eusolver
+pushd recommend/eusolver
+mkdir thirdparty/libeusolver/build
+./scripts/build.sh
+popd
+
+#build source
+pushd src
+path=`pwd`
+spath=${path//\//\\\/}
+echo $spath
+sed -i "s/SOURCEPATH/\"${spath}\"/g" lib/config.cpp
+sed -i "s/Z3PATH/${sz3path}/g" CMakeLists.txt
+popd
+pushd build
+cmake ../src
+make
