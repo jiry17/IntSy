@@ -127,6 +127,17 @@ $ ./run_exp -c R
 
 The result of each single execution is cached in `run/result.pkl` . `run_exp` will firstly check whether  `result.pkl` contains enough data to draw the figure: only the insufficient part will be executed. 
 
+The raw data of each single execution can be found in `run/temp` with the following format:
+
+```
+Finished
+n
+size[0] size[2] ... size[n]
+survive[1] survive[2] ... survive[n]
+```
+
+where $n$ is the number of queries, $size_i$ is the natural logarithm of the number of valid programs after $i$ queries, $survive_i$ records whether the recommendation survives from the $i$th query for *EpsSy*. Besides, a detailed log file can be found in `run/log`.
+
 The figure of each experiment will be stored in `run/figure`.
 
 ###Reproduce results in the paper 
