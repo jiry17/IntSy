@@ -2,23 +2,16 @@
 
 Artifact for PLDI2020: Question Selection for Interactive Program Synthesis
 
-### Requirement
-
-1. cmake and glog, which can be installed in Ubuntu by the following command.
-
-````bash
-$ apt-get install cmake libgoogle-glog-dev python3-pip
-````
-
-2. python packages
-
-```bash
-$ pip3 install pyparsing z3-solver xlrd matplotlib 
-```
-
-### Installation
+### Install
 
 ####Build from source (Test on Ubuntu 16.04) 
+
+1. Install dependencies
+
+```bash
+$ apt-get install cmake libgoogle-glog-dev python3-pip
+$ pip3 install pyparsing z3-solver xlrd matplotlib 
+```
 
 1. Clone IntSy and all its submodules (or just unzip `IntSy.zip` shared on Dropbox)
 
@@ -32,7 +25,7 @@ $ git clone --recursive https://gitee.com/jiry_2/IntSy.git
 $ ./install
 ```
 
-#### Docker
+#### Download docker container
 
 We also release a docker container in which this project is already built at `~/IntSy`.
 
@@ -42,7 +35,7 @@ docker pull takanashirikka/intsy
 
 However, since docker will affect the execution speed, we still recommend building the project from source.
 
-#### Some Tests
+#### Run tests
 
 1. Test whether *Euphony* is successfully installed:
 
@@ -138,7 +131,7 @@ The figure of each experiment will be stored in `run/figure`.
 
 ###Reproduce results in the paper 
 
-#### Results of experiment 1
+#### Reproduce results of experiment 1
 
 ```bash
 $ cd run
@@ -147,9 +140,9 @@ $ ./run_exp -exp 1
 
 For Figure 2 (Line 1046-1062), the script will redraw it as `run/figure/exp1.png` while the original figure used in our paper can be found as `run/expected/exp1.png`.
 
-For data listed in Section 7.3 (Line 1036-1044, 1065-1068), `run_exp` will recalculate it and print it to the standard output.
+For data listed in Section 7.3 (Line 1036-1044, 1065-1068), `run_exp` will recalculate them and print them to the standard output.
 
-#### Results of experiment 2
+#### Reproduce results of experiment 2
 
 ````bash
 $ cd run
@@ -158,7 +151,7 @@ $ ./run_exp -exp 2
 
 For Figure 3 (Line 1101-1115), the script will redraw it as `run/figure/exp2.png` while the original figure used in our paper can be found in `run/expected/exp2.png`.
 
-#### Results of experiment 3
+#### Reproduce results of experiment 3
 
 ````bash
 $ cd run
@@ -167,9 +160,9 @@ $ ./run_exp -exp 3
 
 For Figure 4 (Line 1125-1140), the script will redraw it as `run/figure/exp3.png` while the original figure used in our paper can be found as `run/expected/exp3.png`.
 
-For data listed in Section 7.5 (Line 1148-1154), `run_exp` will recalculate it and print it to the standard output.
+For data listed in Section 7.5 (Line 1148-1154), `run_exp` will recalculate them and print them to the standard output.
 
-#### Results of experiment 4
+#### Reproduce results of experiment 4
 
 ```bash
 $ cd run
