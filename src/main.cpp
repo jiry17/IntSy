@@ -18,6 +18,10 @@ Solver* getSolverByName(std::string name, Specification* spec, ExampleSpace* exa
         return new EpsSy(spec, example_space, sampler, 8, path);
     } else if (name == "SampleSyExp") {
         return new SampleSy(spec, example_space, new SizeBasedSampler(new ExpSizeSelecter()));
+    } else if (name == "SampleSyUniform") {
+        return new SampleSy(spec, example_space, new SizeBasedSampler(new UniformSelecter()));
+    } else if (name == "SampleSyMinimal") {
+        return new SampleSy(spec, example_space, new MinimalSizeBasedSampler(new SizeWeightFixedSelcter()));
     } else if (name.substr(0, 8) == "SampleSy") {
         KSampleLimit = 0;
         for (int i = 8; i < name.size(); ++i) {
@@ -28,6 +32,16 @@ Solver* getSolverByName(std::string name, Specification* spec, ExampleSpace* exa
         return new SampleSy(spec, example_space, new SizeBasedSampler(new SizeWeightFixedSelcter(), 0.5));
     } else if (name == "SampleIn0.1") {
         return new SampleSy(spec, example_space, new SizeBasedSampler(new SizeWeightFixedSelcter(), 0, 0.1));
+    }
+
+    else if (name == "EpsSyUniform") {
+        return new EpsSy(spec, example_space, new SizeBasedSampler(new UniformSelecter()), 6, path);
+    } else if (name == "EpsSyMinimal") {
+        return new EpsSy(spec, example_space, new MinimalSizeBasedSampler(new SizeWeightFixedSelcter()), 6, path);
+    } else if (name.substr(0, 5) == "EpsDe") {
+        return new EpsSy(spec, example_space, new SizeBasedSampler(new SizeWeightFixedSelcter(), 0.5), 6, path);
+    } else if (name == "EpsIn0.1") {
+        return new EpsSy(spec, example_space, new SizeBasedSampler(new SizeWeightFixedSelcter(), 0, 0.1), 6, path);
     } else if (name.substr(0, 5) == "EpsSy") {
         int num = 0;
         for (int i = 5; i <= name.size(); ++i) {

@@ -52,6 +52,9 @@ public:
 class UniformSelecter: public SizeSelecter {
 public:
     virtual int select(std::vector<double> A);
+    virtual int getBestSize(std::vector<double> A) {
+        for (int i=0;i<A.size();++i) if (A[i]>0.5) return i;
+    }
 };
 
 class SizeWeightFixedSelcter: public SizeSelecter {
@@ -71,6 +74,7 @@ public:
 };
 
 class SizeBasedSampler: public Sampler{
+protected:
     Program* sampleWithSize(VSANode* node, int size);
     void calculateSizeInfo(VSANode* node);
     std::vector<std::vector<double> > size_info;
@@ -82,6 +86,13 @@ public:
                                                 int time_limit = 10, int number_limit = 500);
     virtual Program* getBestSample(VSANode* node);
     SizeBasedSampler(SizeSelecter* _selecter, double _alpha = 0, double _beta = 0): selecter(_selecter), alpha(_alpha), beta(_beta) {}
+};
+
+class MinimalSizeBasedSampler: public SizeBasedSampler {
+public:
+    MinimalSizeBasedSampler(SizeSelecter* _selector): SizeBasedSampler(_selector) {}
+    virtual std::vector<Program*> sampleFromVSA(VSANode* node, ExampleSpace* example_space, Specification* spec,
+            int time_limit = 10, int number_limit = 500);
 };
 
 

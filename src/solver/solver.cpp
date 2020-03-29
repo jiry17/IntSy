@@ -592,6 +592,10 @@ int SampleSy::synthesize() {
     LogUtil::updateResult(builder.getSize(root));
     std::vector<Program*> sample_list = sampler->sampleFromVSA(root, example_space, spec);
 
+    int sample_num = 0;
+    for (auto* sample: sample_list) {
+        if (!example_space->checkCorrect(sample)) sample_num += 1;
+    }
     DataList inp = getBestExample(sample_list);
     DataList counter_example;
 
@@ -615,18 +619,25 @@ int SampleSy::synthesize() {
                   "Remaining samples: " << sample_list.size() << std::endl;
         spec->addExample(inp, oup);
         root = builder.addExample(root, example_id++);
-        LogUtil::updateResult(builder.getSize(root));
+        LogUtil::updateResult(builder.getSize(root), 0, sample_num);
         reduceSample(sample_list);
         std::vector<Program*> new_samples = sampler->sampleFromVSA(root, example_space, spec, 2);
         for (auto* sample: new_samples) sample_list.push_back(sample);
 
         if (checkAllSame(example_space, sample_list.begin(), sample_list.end())) {
             LOG(INFO) << "All samples are the same" << std::endl;
+            sample_num = 2;
             if (checkFinished(root, inp)) {
                 break;
             }
         } else {
             inp = getBestExample(sample_list);
+            sample_num = 0;
+            for (auto* sample: sample_list) {
+                if (!example_space->checkCorrect(sample)) {
+                    sample_num += 1;
+                }
+            }
         }
 
         bool is_find = false;

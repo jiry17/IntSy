@@ -11,6 +11,7 @@
 struct Record {
     std::vector<double> remain_size;
     std::vector<int> is_survive;
+    std::vector<int> sample_num;
 };
 
 extern const std::string KProjectPath;

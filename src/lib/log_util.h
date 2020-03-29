@@ -31,6 +31,10 @@ class LogUtil {
             fprintf(oup, "%d", global_record.is_survive[i]);
         }
         fprintf(oup, "\n");
+        for (int i = 0; i < num; ++i) {
+            if (i) fprintf(oup, " ");
+            fprintf(oup, "%d", global_record.sample_num[i]);
+        }
         fclose(oup);
     }
 
@@ -87,9 +91,10 @@ public:
         return ans;
     }
 
-    static void updateResult(double size, int is_survive = 0) {
+    static void updateResult(double size, int is_survive = 0, int sample_num = 0) {
         global_record.remain_size.push_back(std::log(size));
         global_record.is_survive.push_back(is_survive);
+        global_record.sample_num.push_back(sample_num);
         printResult(false);
     }
 

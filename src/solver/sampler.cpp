@@ -186,35 +186,6 @@ int MinimalSelecter::select(std::vector<double> A) {
     }
 }
 
-/*
-int AdaptiveSizeSelecter::select(std::vector<double> A) {
-    for (int i = 0; i < A.size(); ++i) if (A[i] >= 1) A[i] = A[i] * std::exp(-i * log(b));
-    return proportionalSampleFromVector(A);
-}
-
-int AdaptiveSizeSelecter::modify(std::vector<Program *> samples, ExampleSpace *example_sace,
-                                 Specification *spec) {
-    if (limit == 0) return 0;
-    // Check whether there is a program occurs more than |samples|/2 times
-    Program* result = samples[0];
-    int count = 0;
-    for (auto* program: samples) {
-        if (example_sace->equal(program, result)) {
-            ++count;
-        } else if (count == 0) {
-            count = 1; result = program;
-        } else --count;
-    }
-    count = 0;
-    for (auto* program: samples) {
-        if (example_sace->equal(program, result)) ++count;
-    }
-    if (count <= samples.size() / 2) return 0;
-    --limit; b *= step;
-    // std::cout << "Update " << limit << " " << b << std::endl;
-    return 1;
-}*/
-
 int SizeWeightFixedSelcter::select(std::vector<double> A) {
     if (!is_initialize) {
         is_initialize = true;
@@ -284,4 +255,49 @@ int TestSizeWeightFixedSelcter::select(std::vector<double> A) {
         }
     }
     return proportionalSampleFromVector(A);
+}
+
+std::vector<Program *> MinimalSizeBasedSampler::sampleFromVSA(VSANode *node, ExampleSpace *example_space,
+                                                              Specification *spec, int time_limit, int number_limit) {
+
+    clock_t start_time = clock();
+    calculateSizeInfo(node);
+
+    double total_size = 0.0;
+    for (auto k: size_info[node->temp_id]) total_size += k;
+    LOG(INFO) << "Size info " << std::to_string(total_size) << std::endl;
+
+    ListExampleSapce* list_example_space = dynamic_cast<ListExampleSapce*>(example_space);
+    std::vector<Program*> program_list;
+    int current_size = 0;
+    int tempts = 0;
+    do {
+        if (tempts > 1000 || size_info[node->temp_id][current_size] < 1) {
+            current_size += 1;
+            tempts = 0;
+            continue;
+        }
+        Program* result = sampleWithSize(node, current_size);
+        bool is_new = true;
+        for (auto* program: program_list) {
+            if (example_space->equal(result, program)) {
+                is_new = false;
+                break;
+            }
+        }
+        if (is_new) {
+            program_list.push_back(result);
+            tempts = 0;
+        } else {
+            tempts += 1;
+        }
+    } while (1.0 * (clock() - start_time) / CLOCKS_PER_SEC <= time_limit && program_list.size() < number_limit && current_size < size_info[node->temp_id].size());
+#ifdef DEBUG
+    for (Program* program: program_list) {
+        for (const auto& example: node->spec->example_list) {
+            assert(program->run(example.first) == example.second);
+        }
+    }
+#endif
+    return program_list;
 }
