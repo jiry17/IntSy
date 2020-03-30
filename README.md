@@ -4,7 +4,7 @@ Artifact for PLDI2020: Question Selection for Interactive Program Synthesis
 
 ### Install
 
-####Build from source (Test on Ubuntu 16.04) 
+#### Build from source (Test on Ubuntu 16.04) 
 
 1. Install dependencies
 
@@ -16,7 +16,7 @@ $ pip3 install pyparsing z3-solver xlrd matplotlib
 1. Clone IntSy and all its submodules (or just unzip `IntSy.zip` shared on Dropbox)
 
 ```bash
-$ git clone --recursive https://gitee.com/jiry_2/IntSy.git
+$ git clone --recursive https://github.com/jiry17/IntSy.git
 ```
 
 2. Build the whole project. Under the root directory of the project:
@@ -146,7 +146,7 @@ where $n$ is the number of queries, $size_i$ is the natural logarithm of the num
 
 The figure of each experiment will be stored in `run/figure`.
 
-###Reproduce results in the paper 
+### Reproduce results in the paper 
 
 #### Reproduce results of experiment 1
 
