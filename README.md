@@ -4,7 +4,7 @@ Artifact for PLDI2020: Question Selection for Interactive Program Synthesis
 
 ### Install
 
-####Build from source (Test on Ubuntu 16.04) 
+#### Build from source (Test on Ubuntu 16.04) 
 
 1. Install dependencies
 
@@ -146,7 +146,7 @@ where $n$ is the number of queries, $size_i$ is the natural logarithm of the num
 
 The figure of each experiment will be stored in `run/figure`.
 
-###Reproduce results in the paper 
+### Reproduce results in the paper 
 
 #### Reproduce results of experiment 1
 
