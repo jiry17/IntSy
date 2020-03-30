@@ -155,9 +155,9 @@ $ cd run
 $ ./run_exp -exp 1
 ```
 
-For Figure 2 (Line 1046-1062), the script will redraw it as `run/figure/exp1.png` while the original figure used in our paper can be found as `run/expected/exp1.png`.
+For Figure 2, the script will redraw it as `run/figure/exp1.png` while the original figure used in our paper can be found as `run/expected/exp1.png`.
 
-For data listed in Section 7.3 (Line 1036-1044, 1065-1068), `run_exp` will recalculate them and print them to the standard output.
+For data listed in Section 7.3, `run_exp` will recalculate them and print them to the standard output.
 
 #### Reproduce results of experiment 2
 
@@ -166,7 +166,7 @@ $ cd run
 $ ./run_exp -exp 2
 ````
 
-For Figure 3 (Line 1101-1115), the script will redraw it as `run/figure/exp2.png` while the original figure used in our paper can be found in `run/expected/exp2.png`.
+For data listed in Table 2,  `run_exp` will recalculate them and print them to the standard output.
 
 #### Reproduce results of experiment 3
 
@@ -175,9 +175,9 @@ $ cd run
 $ ./run_exp -exp 3
 ````
 
-For Figure 4 (Line 1125-1140), the script will redraw it as `run/figure/exp3.png` while the original figure used in our paper can be found as `run/expected/exp3.png`.
+For Figure 4, the script will redraw it as `run/figure/exp3.png` while the original figure used in our paper can be found as `run/expected/exp3.png`.
 
-For data listed in Section 7.5 (Line 1148-1154), `run_exp` will recalculate them and print them to the standard output.
+For data listed in Section 7.5, `run_exp` will recalculate them and print them to the standard output.
 
 #### Reproduce results of experiment 4
 
@@ -186,6 +186,6 @@ $ cd run
 $ ./run_exp -exp 4
 ```
 
-For Figure 5 (Line 1167-1179), the script will redraw it as `run/figure/exp4.png` while the original figure used in our paper can be found as `run/expected/exp4.png`.
+For Figure 5, the script will redraw it as `run/figure/exp4.png` while the original figure used in our paper can be found as `run/expected/exp4.png`.
 
 **Note:** There may be some small differences between the results listed in our paper and the reproduced ones since all the synthesizers in our paper are random. The results of the string track are more stable than those of the repair track since the former one contains much more benchmarks. Besides, to reduce the influence of randomness, `run_exp` repeats each execution for $5$ times by default. If we ignore the randomness, using flag `-r 1` could significantly speed up the whole process.
