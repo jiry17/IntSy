@@ -29,8 +29,14 @@ $ ./install
 
 We also release a docker container in which this project is already built at `~/IntSy`.
 
-```
+```bash
 docker pull takanashirikka/intsy
+```
+
+The docker container can be executed using the following command:
+
+```bash
+docker run --rm -it takanashirikka/intsy
 ```
 
 However, since docker will affect the execution speed, we still recommend building the project from source.
@@ -182,4 +188,4 @@ $ ./run_exp -exp 4
 
 For Figure 5 (Line 1167-1179), the script will redraw it as `run/figure/exp4.png` while the original figure used in our paper can be found as `run/expected/exp4.png`.
 
-**Note:** There may be some small differences between the results listed in our paper and the reproduced ones since all the synthesizers in our paper are random. The results of the string track are more stable than those of the repair track since the former one contains much more benchmarks.
+**Note:** There may be some small differences between the results listed in our paper and the reproduced ones since all the synthesizers in our paper are random. The results of the string track are more stable than those of the repair track since the former one contains much more benchmarks. Besides, to reduce the influence of randomness, `run_exp` repeats each execution for $5$ times by default. If we ignore the randomness, using flag `-r 1` could significantly speed up the whole process.
