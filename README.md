@@ -16,7 +16,7 @@ $ pip3 install pyparsing z3-solver xlrd matplotlib
 1. Clone IntSy and all its submodules (or just unzip `IntSy.zip` shared on Dropbox)
 
 ```bash
-$ git clone --recursive https://gitee.com/jiry_2/IntSy.git
+$ git clone --recursive https://github.com/jiry17/IntSy.git
 ```
 
 2. Build the whole project. Under the root directory of the project:
