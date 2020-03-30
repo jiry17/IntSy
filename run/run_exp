@@ -68,9 +68,9 @@ class ResultInfo:
 
 
 solver_list_for_exp = {
-    0: ["RandomSy", "SampleSy", "SampleIn0.1", "SampleDe", "SampleSy2", "SampleSy20", "SampleSy5000", "EpsSy"],
+    0: ["RandomSy", "SampleSy", "SampleIn0.1", "SampleDe", "SampleSy2", "SampleSy20", "SampleSy5000", "EpsSy", "EpsIn0.1", "EpsDe", "EpsSyUniform", "EpsSyMinimal", "SampleSy", "SampleSyUniform"],
     1: ["RandomSy", "SampleSy", "EpsSy"],
-    2: ["SampleSy", "SampleIn0.1", "SampleDe"],
+    2: ["SampleSy", "SampleIn0.1", "SampleDe", "SampleSyUniform", "SampleSyMinimal", "EpsSy", "EpsIn0.1", "EpsDe", "EpsSyUniform", "EpsSyMinimal", "SampleSy", "SampleSyUniform"],
     3: ["SampleSy2", "SampleSy20", "SampleSy5000"],
     4: ["EpsSy"]
 }
@@ -239,10 +239,14 @@ def get_average(value, name):
     num = 0
     result_list = []
     for w in value:
-        if w.status == RunStatus.OK:
+        if w.status == RunStatus.OK or w.status == RunStatus.WA:
             total += w.getNum(5, name)
             result_list.append(w.getNum(5, name))
             num += 1
+            if "SampleSy" in name and w.getNum(5, name) > 10:
+                print(name, w.getNum(5, name))
+    if num < 5:
+        print("Fail", name, num)
     if num == 0:
         for w in value:
             total += w.getNum(5, name)
@@ -277,6 +281,20 @@ def draw_exp123(solver_list, name_map, restore_file, compare_ratio, data_name_ma
 
     title_list = ["Repair Track", "String Track"]
     where = -1
+
+    for dataset_name in dataset_list + [""]:
+        print("In", dataset_name)
+        for solver in solver_list:
+            prod = 1
+            count = 0
+            for key, value in benchmark_result.items():
+                assert len(value) == len(solver_list)
+                if dataset_name not in key: continue
+                prod += value[solver][0].num
+                count += 1
+            average = prod * (1.0 / count)
+            print(solver + ":", average, count)
+            
 
     for dataset_name in dataset_list:
         where += 1
@@ -334,9 +352,9 @@ def draw_exp123(solver_list, name_map, restore_file, compare_ratio, data_name_ma
             solver_result[name] = sorted(solver_result[name])
             n = len(solver_result[name])
 
-        ls_list = ['--', '-', '-.', ':', '-.']
-        lc = ['orange', 'indianred', 'cornflowerblue']
-        pc = ['peru', 'darkred', 'mediumblue']
+        ls_list = ['--', '-', '-.', '-.', '-.']
+        lc = ['orange', 'indianred', 'cornflowerblue', 'forestgreen', "violet"]
+        pc = ['peru', 'darkred', 'mediumblue', 'darkgreen', "purple"]
         name_list = []
         for i in range(len(solver_list)):
             name = solver_list[i]
@@ -437,8 +455,8 @@ def draw(exp_id):
     if exp_id == 1:
         draw_exp123(["SampleSy", "RandomSy", "EpsSy"], lambda x: x, "exp1.png", [0.3, 1])
     elif exp_id == 2:
-        name_map = {"SampleDe": "weakened ps", "SampleSy": "ps", "SampleIn0.1": "enhanced ps"}
-        draw_exp123(["SampleDe", "SampleSy", "SampleIn0.1"], lambda x: name_map[x], "exp2.png", [])
+        name_map = {"SampleDe": "weakened ps", "SampleSy": "ps", "SampleIn0.1": "enhanced ps", "SampleSyUniform": "uniform", "SampleSyMinimal": "minimal"}
+        draw_exp123(["SampleDe", "SampleSy", "SampleIn0.1", "SampleSyUniform", "SampleSyMinimal"], lambda x: name_map[x], "exp2.png", [1])
     elif exp_id == 3:
         draw_exp123(["SampleSy2", "SampleSy20", "SampleSy5000"], lambda x: "w = " + x[8:], "exp3.png", [0.3, 1], lambda x: "S(" + x[8:] + ")")
     elif exp_id == 4:
